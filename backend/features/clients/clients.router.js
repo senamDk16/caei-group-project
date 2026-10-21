@@ -1,11 +1,11 @@
 
 const express = require('express');
 const ClientService = require('./clients.service');
-const router = express.Router();
+const routerClient = express.Router();
 
 
 
-router.get('/', (req, res) => {
+routerClient.get('/', (req, res) => {
     try {
         const clients = ClientService.getAll();
         res.json(clients);
@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 });
 
 
-router.get('/:id', (req, res) => {
+routerClient.get('/:id', (req, res) => {
     try {
         const client = ClientService.getById(req.params.id);
         if (!client) {
@@ -28,7 +28,7 @@ router.get('/:id', (req, res) => {
 });
 
 
-router.post('/', (req, res) => {
+routerClient.post('/', (req, res) => {
     try {
         const { nom, prenom, telephone, adresse } = req.body;
         if (!nom || !prenom) {
@@ -42,7 +42,7 @@ router.post('/', (req, res) => {
 });
 
 
-router.put('/:id', (req, res) => {
+routerClient.put('/:id', (req, res) => {
     try {
         const { nom, prenom, telephone, adresse } = req.body;
         const updatedClient = ClientService.update(req.params.id, { nom, prenom, telephone, adresse });
@@ -53,7 +53,7 @@ router.put('/:id', (req, res) => {
 });
 
 
-router.delete('/:id', (req, res) => {
+routerClient.delete('/:id', (req, res) => {
     try {
         ClientService.delete(req.params.id);
         res.json({ message: "Client supprimé avec succès" });
@@ -62,4 +62,4 @@ router.delete('/:id', (req, res) => {
     }
 });
 
-module.exports = router;
+module.exports = routerClient;
