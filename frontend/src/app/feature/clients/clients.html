@@ -34,7 +34,12 @@
 
 
         <tbody class="divide-y divide-gray-200 text-sm text-gray-700">
-          <tr *ngFor="let client of clients" class="hover:bg-gray-50/80 transition duration-150">
+          <tr>
+            @for (item of clientsList; track $index) {
+              <td class="px-6 py-4 ">{{item.nom}}</td>
+            }
+          </tr>
+          <!-- <tr *ngFor="let client of clients" class="hover:bg-gray-50/80 transition duration-150">
             <td class="px-6 py-4 font-semibold text-gray-900">{{ client.nom }}</td>
             <td class="px-6 py-4">{{ client.prenom }}</td>
             <td class="px-6 py-4 font-mono text-xs text-gray-600">{{ client.telephone }}</td>
@@ -56,7 +61,7 @@
             <td colspan="5" class="px-6 py-8 text-center text-gray-400">
               Aucun client trouvé.
             </td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
     </div>

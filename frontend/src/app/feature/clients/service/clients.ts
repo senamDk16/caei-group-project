@@ -1,18 +1,21 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Service } from '@angular/core';
+import { Inject, Service, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ClientResponse } from '../interfaces/clients.response';
 import { ClientRequest } from '../interfaces/clients.request';
 
-@Service()
-export class Clients {
+// @Service()
+@Injectable({
+  providedIn: 'root'
+})
+export class ClientService {
 
-  // constructor(private http: HttpClient){}
-  http:HttpClient = Inject(HttpClient)
+  constructor(private http: HttpClient){}
+  // http:HttpClient = Inject(HttpClient)
   url = "http://localhost:5000/clients"
 
-  getAllClient(): Observable<ClientResponse>{
-    return this.http.get(`${this.url}/`)
+  getAllClient(): Observable<ClientResponse[]>{
+    return this.http.get<ClientResponse[]>(`${this.url}/`)
   }
 
   getOneClient(id:number): Observable<ClientResponse>{
@@ -30,7 +33,7 @@ export class Clients {
   }
 
 
-  delete(id:number): Observable<ClientResponse>{
-    return this.http.delete(`${this.url}/${id}`)
+  delete(id:number): Observable<void>{
+    return this.http.delete<void>(`${this.url}/${id}`)
   }
 }

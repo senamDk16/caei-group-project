@@ -1,12 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit, Service } from '@angular/core';
+import { ClientResponse } from './interfaces/clients.response';
+import { ClientRequest } from './interfaces/clients.request';
+import { ClientService } from './service/clients';
 
-export interface Client {
-  id: number;
-  nom: string;
-  prenom: string;
-  telephone: string;
-  adresse: string;
-}
 
 
 @Component({
@@ -16,25 +12,54 @@ export interface Client {
   templateUrl: './clients.html',
 })
 
-export class ClientComponent {
+export class ClientComponent implements OnInit{
+  // service:ClientService = Inject(ClientService)
 
-  clients: Client[] = [
-    { id: 1, nom: 'Koffi', prenom: 'Jean', telephone: '+228 90 00 11 22', adresse: 'Lomé, Togo' },
-    { id: 2, nom: 'Mensah', prenom: 'Abla', telephone: '+228 91 33 44 55', adresse: 'Atakpamé, Togo' },
-    { id: 3, nom: 'Sow', prenom: 'Moussa', telephone: '+221 77 123 45 67', adresse: 'Dakar, Sénégal' }
-  ];
+  constructor(private service:ClientService){}
 
-  ajouterClient(): void {
-
-    console.log('Ajouter un client');
+  ngOnInit(): void {
+      this.getAll()
   }
 
-  editerClient(client: Client): void {
+  clientsList:ClientResponse[] = []
+  requestClient:ClientRequest = {}
+  client:ClientResponse = {}
 
-    console.log('Modifier client :', client);
+    ajouterClient(){
+
+  }
+  editerClient(){
+
   }
 
-  supprimerClient(id: number): void {
-    this.clients = this.clients.filter(c => c.id !== id);
+  getAll(){
+    this.service.getAllClient().subscribe({
+      next: (data)=>{
+        this.clientsList = data
+      }
+    })
+  }
+
+  getOne(id:number){
+    this.service.getOneClient(id).subscribe({
+      next: (data) => this.client = data
+    })
+  }
+
+  postClient(req:ClientRequest){
+    this.service.postClient(req).subscribe({
+      next: (data)=> this.client = data
+    })
+  }
+
+  putClient(req:ClientRequest, id:number){
+    this.service.putClient(id, req).subscribe({
+      next: (data)=> this.client = data
+    })
+  }
+  delete(id:number){
+    this.service.delete(id).subscribe({
+      next: ()=> console.log("delete")
+    })
   }
 }
