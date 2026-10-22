@@ -1,4 +1,65 @@
-<div class="bg-red-300 w-full h-screen">
+
+<div class="max-w-6xl mx-auto space-y-6">
+
+
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-800">Gestion des Clients</h1>
+      <p class="text-gray-500 text-sm">Consultez, ajoutez ou gérez la liste de vos clients.</p>
+    </div>
+
+
+    <button
+      (click)="ajouterClient()"
+      class="flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2.5 rounded-lg shadow transition duration-200">
+      <span>+</span>
+      <span>Ajouter un client</span>
+    </button>
+  </div>
+
+
+  <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+
+        <thead>
+          <tr class="bg-gray-50 border-b border-gray-200 text-xs font-semibold uppercase text-gray-500 tracking-wider">
+            <th class="px-6 py-4">Nom</th>
+            <th class="px-6 py-4">Prénom</th>
+            <th class="px-6 py-4">Téléphone</th>
+            <th class="px-6 py-4">Adresse</th>
+            <th class="px-6 py-4 text-right">Actions</th>
+          </tr>
+        </thead>
+
+
+        <tbody class="divide-y divide-gray-200 text-sm text-gray-700">
+          <tr *ngFor="let client of clients" class="hover:bg-gray-50/80 transition duration-150">
+            <td class="px-6 py-4 font-semibold text-gray-900">{{ client.nom }}</td>
+            <td class="px-6 py-4">{{ client.prenom }}</td>
+            <td class="px-6 py-4 font-mono text-xs text-gray-600">{{ client.telephone }}</td>
+            <td class="px-6 py-4">{{ client.adresse }}</td>
+            <td class="px-6 py-4 text-right space-x-2">
+              <button
+                (click)="editerClient(client)"
+                class="px-3 py-1.5 bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-200 rounded-md font-medium text-xs transition">
+                ✏️ Modifier
+              </button>
+              <button
+                (click)="supprimerClient(client.id)"
+                class="px-3 py-1.5 bg-red-50 text-red-700 hover:bg-red-100 border border-red-200 rounded-md font-medium text-xs transition">
+                🗑️ Supprimer
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="clients.length === 0">
+            <td colspan="5" class="px-6 py-8 text-center text-gray-400">
+              Aucun client trouvé.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
 </div>
-
